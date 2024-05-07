@@ -20,7 +20,9 @@ jobs:
       pull-requests: write
     steps:
       - uses: actions/checkout@v4
-      - run: npm ci && npm run build
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+      - run: cd app && npm ci && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
@@ -33,7 +35,7 @@ jobs:
     name: Deploy to Firebase Hosting on merge
     steps:
       - uses: actions/checkout@v4
-      - run: npm ci && npm run build
+      - run: cd app && npm ci && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
